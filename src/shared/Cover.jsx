@@ -13,7 +13,7 @@ const Cover = ({ title, description, image }) => {
 
       {/* Content */}
       <div className="relative w-1/2 bg-slate-500 bg-opacity-70 text-white px-2 py-14 shadow-lg rounded-md">
-        <h1 className="text-4xl font-bold mb-2">{title}</h1>
+        <h1 className="text-4xl font-bold mb-2 uppercase">{title}</h1>
         <p className="text-sm text-white">{description}</p>
       </div>
     </div>
