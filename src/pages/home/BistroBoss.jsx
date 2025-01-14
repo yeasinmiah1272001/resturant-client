@@ -1,12 +1,13 @@
 import React from "react";
-import SpecialSection from "../../components/SpecialSection";
+
 import img from "../../assets/home/chef-special.jpg";
 import Container from "../../components/Container";
+import Cover from "../../shared/Cover";
 
 const BistroBoss = () => {
   return (
     <Container>
-      <SpecialSection
+      <Cover
         image={img}
         title={"Bistro Boss"}
         description={
