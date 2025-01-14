@@ -3,7 +3,7 @@ import React from "react";
 const SpecialSection = ({ title, description, image }) => {
   return (
     <div
-      className="relative bg-cover bg-center h-64 flex items-center justify-center text-center mt-4"
+      className="relative bg-fixed bg-cover bg-center h-64 flex items-center justify-center text-center mt-4"
       style={{
         backgroundImage: `url(${image})`, // Use the dynamic image as background
       }}
