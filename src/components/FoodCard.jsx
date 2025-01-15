@@ -2,7 +2,7 @@ import React from "react";
 
 const FoodCard = ({ items }) => {
   return (
-    <div className="bg-white rounded-lg border border-gray-200 shadow-sm hover:shadow-lg transition-shadow duration-300">
+    <div className="bg-white rounded-lg  border border-gray-200 shadow-sm hover:shadow-lg transition-shadow duration-300">
       {/* Image */}
       <div className="overflow-hidden relative rounded-t-lg">
         <img
@@ -13,7 +13,7 @@ const FoodCard = ({ items }) => {
           width={300}
         />
         <span className="absolute bg-black text-white right-3 border  duration-300 border-gray-500 px-2 rounded-md p-1 top-3">
-          344
+          {items.price}
         </span>
       </div>
 
