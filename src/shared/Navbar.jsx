@@ -4,9 +4,11 @@ import { NavLink } from "react-router-dom";
 import { FaShoppingCart } from "react-icons/fa";
 import { useContext } from "react";
 import { AuthContext } from "../provider/AuthProvider";
+import useCarts from "../hooks/useCarts";
 
 const Navbar = () => {
   const { user, logOut } = useContext(AuthContext);
+  const [carts] = useCarts();
   const handleLogout = () => {
     logOut();
   };
@@ -37,10 +39,10 @@ const Navbar = () => {
         )}
       </li>
       <li>
-        <NavLink to="/dash/cart">
+        <NavLink to="/">
           <div className="flex items-center">
             <FaShoppingCart></FaShoppingCart>
-            <h1 className="badge badge-secondary ml-2">0</h1>
+            <h1 className="badge badge-secondary ml-2">{carts.length}</h1>
           </div>
         </NavLink>
       </li>
