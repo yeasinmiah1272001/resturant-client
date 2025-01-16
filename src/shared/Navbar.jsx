@@ -39,7 +39,7 @@ const Navbar = () => {
         )}
       </li>
       <li>
-        <NavLink to="/">
+        <NavLink to="/dashboard/carts">
           <div className="flex items-center">
             <FaShoppingCart></FaShoppingCart>
             <h1 className="badge badge-secondary ml-2">{carts.length}</h1>

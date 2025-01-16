@@ -6,6 +6,9 @@ import Menu from "../pages/Menu/Menu";
 import Order from "../pages/Order/Order";
 import Login from "../pages/Login";
 import Signup from "../pages/Signup";
+import Dashboard from "../layout/Dashboard";
+import Carts from "../pages/Dashboard/Carts";
+import OrderPage from "../pages/Dashboard/OrderPage";
 
 export const router = createBrowserRouter([
   {
@@ -31,6 +34,20 @@ export const router = createBrowserRouter([
       {
         path: "/signup",
         element: <Signup />,
+      },
+    ],
+  },
+  {
+    path: "dashboard",
+    element: <Dashboard />,
+    children: [
+      {
+        path: "carts",
+        element: <Carts />,
+      },
+      {
+        path: "order",
+        element: <OrderPage />,
       },
     ],
   },
