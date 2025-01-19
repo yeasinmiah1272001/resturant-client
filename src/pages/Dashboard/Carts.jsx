@@ -36,11 +36,6 @@ const Carts = () => {
     });
   };
 
-  // Function to handle item update (example, just logs item id)
-  const handleUpdate = (id) => {
-    console.log(`Update item with id: ${id}`);
-  };
-
   return (
     <div>
       <SectionTitle heading={"Carts Page"} />
@@ -81,10 +76,7 @@ const Carts = () => {
                   >
                     <FaTrashAlt /> {/* Delete icon */}
                   </button>
-                  <button
-                    className="text-blue-500 hover:text-blue-700"
-                    onClick={() => handleUpdate(item.id)}
-                  >
+                  <button className="text-blue-500 hover:text-blue-700">
                     <FaEdit /> {/* Edit icon */}
                   </button>
                 </td>

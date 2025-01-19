@@ -3,17 +3,63 @@ import SectionTitle from "../../components/SectionTitle";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 import { useQuery } from "@tanstack/react-query";
 import { FaEdit, FaTrash, FaUserShield } from "react-icons/fa";
+import Swal from "sweetalert2";
 
 const AllUsers = () => {
   const axiosSecure = useAxiosSecure();
 
-  const { data: users = [] } = useQuery({
+  const { data: users = [], refetch } = useQuery({
     queryKey: ["users"],
     queryFn: async () => {
       const res = await axiosSecure.get("/users");
       return res.data;
     },
   });
+
+  const handleDelete = (id) => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        axiosSecure.delete(`/users/${id}`).then((res) => {
+          if (res.data.deletedCount > 0) {
+            Swal.fire({
+              title: "Deleted!",
+              text: "users has been deleted.",
+              icon: "success",
+            });
+            refetch();
+          }
+        });
+      }
+    });
+  };
+
+  const handleMakeadmin = (user) => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        Swal.fire({
+          title: "Deleted!",
+          text: "Your file has been deleted.",
+          icon: "success",
+        });
+      }
+    });
+  };
 
   return (
     <div>
@@ -43,7 +89,11 @@ const AllUsers = () => {
                   {user.email}
                 </td>
                 <td className="border border-gray-300 px-4 py-2">
-                  <FaUserShield size={30} className="text-green-500 inline" />
+                  <FaUserShield
+                    onClick={handleMakeadmin}
+                    size={30}
+                    className="text-green-500 inline"
+                  />
                 </td>
                 <td className="border border-gray-300 px-4 py-2 flex justify-center gap-4">
                   <button
@@ -53,6 +103,7 @@ const AllUsers = () => {
                     <FaEdit />
                   </button>
                   <button
+                    onClick={() => handleDelete(user._id)}
                     className="text-red-500 hover:text-red-700"
                     title="Delete"
                   >
