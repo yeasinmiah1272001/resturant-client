@@ -1,103 +1,177 @@
 import React from "react";
 import { NavLink, Outlet } from "react-router-dom";
 import {
-  FaShoppingCart,
-  FaBox,
-  FaUser,
+  FaUserTie,
+  FaUserShield,
+  FaPlusSquare,
+  FaClipboardList,
+  FaTasks,
+  FaBoxes,
+  FaUsers,
+  FaUserFriends,
   FaHome,
-  FaPlus,
-  FaFileContract,
+  FaUtensils,
+  FaBookOpen,
   FaEnvelope,
-  FaAddressBook,
-} from "react-icons/fa"; // Importing React Icons
-import { FaCalendar } from "react-icons/fa6";
+  FaPhone,
+  FaComments,
+  FaCalendarAlt,
+  FaRegCalendarCheck,
+  FaShoppingBag,
+  FaCartPlus,
+  FaStar,
+  FaCommentDots,
+  FaClipboardCheck,
+  FaTruck,
+  FaBookmark,
+  FaCalendarCheck,
+} from "react-icons/fa";
 
 const Dashboard = () => {
   const isAdmin = true;
   return (
     <div className="flex h-screen">
       {/* Left side navigation */}
-      <div className="w-1/4 bg-yellow-500 text-white p-5 flex flex-col">
+      <div className="w-1/4 bg-yellow-500 text-black p-5 flex flex-col">
         <h2 className="text-2xl font-bold mb-8">Dashboard</h2>
         <ul className="space-y-6">
-          <li>
-            <NavLink
-              to="/dashboard/userhome"
-              className={({ isActive }) =>
-                isActive
-                  ? "text-red-500 font-semibold flex items-center space-x-2"
-                  : "hover:text-blue-400 flex items-center space-x-2"
-              }
-            >
-              <FaUser size={20} /> {/* Cart Icon */}
-              <span>User Home</span>
-            </NavLink>
-          </li>
-          <li>
-            <NavLink
-              to="/dashboard/resarvation"
-              className={({ isActive }) =>
-                isActive
-                  ? "text-red-500 font-semibold flex items-center space-x-2"
-                  : "hover:text-blue-400 flex items-center space-x-2"
-              }
-            >
-              <FaCalendar size={20} /> {/* Cart Icon */}
-              <span>Resarvation</span>
-            </NavLink>
-          </li>
-          <li>
-            <NavLink
-              to="/dashboard/carts"
-              className={({ isActive }) =>
-                isActive
-                  ? "text-red-500 font-semibold flex items-center space-x-2"
-                  : "hover:text-blue-400 flex items-center space-x-2"
-              }
-            >
-              <FaShoppingCart size={20} /> {/* Cart Icon */}
-              <span> My Carts</span>
-            </NavLink>
-          </li>
-          <li>
-            <NavLink
-              to="/dashboard/carts"
-              className={({ isActive }) =>
-                isActive
-                  ? "text-red-500 font-semibold flex items-center space-x-2"
-                  : "hover:text-blue-400 flex items-center space-x-2"
-              }
-            >
-              <FaAddressBook size={20} /> {/* Cart Icon */}
-              <span> Add Review</span>
-            </NavLink>
-          </li>
-          <li>
-            <NavLink
-              to="/dashboard/order"
-              className={({ isActive }) =>
-                isActive
-                  ? "text-red-500 font-semibold flex items-center space-x-2"
-                  : "hover:text-blue-400 flex items-center space-x-2"
-              }
-            >
-              <FaBox size={20} /> {/* Orders Icon */}
-              <span>Orders</span>
-            </NavLink>
-          </li>
-          <li>
-            <NavLink
-              to="/dashboard/booking"
-              className={({ isActive }) =>
-                isActive
-                  ? "text-red-500 font-semibold flex items-center space-x-2"
-                  : "hover:text-blue-400 flex items-center space-x-2"
-              }
-            >
-              <FaUser size={20} /> {/* Profile Icon */}
-              <span>My Booking</span>
-            </NavLink>
-          </li>
+          {isAdmin ? (
+            <>
+              <li>
+                <NavLink
+                  to="/dashboard/adminhome"
+                  className={({ isActive }) =>
+                    isActive
+                      ? "text-red-500 font-semibold flex items-center space-x-2"
+                      : "hover:text-blue-400 flex items-center space-x-2"
+                  }
+                >
+                  <FaUserShield size={20} />
+                  <span>Admin Home</span>
+                </NavLink>
+              </li>
+              <li>
+                <NavLink
+                  to="/dashboard/additems"
+                  className={({ isActive }) =>
+                    isActive
+                      ? "text-red-500 font-semibold flex items-center space-x-2"
+                      : "hover:text-blue-400 flex items-center space-x-2"
+                  }
+                >
+                  <FaPlusSquare size={20} />
+                  <span>Add Items</span>
+                </NavLink>
+              </li>
+              <li>
+                <NavLink
+                  to="/dashboard/manageitems"
+                  className={({ isActive }) =>
+                    isActive
+                      ? "text-red-500 font-semibold flex items-center space-x-2"
+                      : "hover:text-blue-400 flex items-center space-x-2"
+                  }
+                >
+                  <FaTasks size={20} />
+                  <span>Manage Items</span>
+                </NavLink>
+              </li>
+              <li>
+                <NavLink
+                  to="/dashboard/users"
+                  className={({ isActive }) =>
+                    isActive
+                      ? "text-red-500 font-semibold flex items-center space-x-2"
+                      : "hover:text-blue-400 flex items-center space-x-2"
+                  }
+                >
+                  <FaUsers size={20} />
+                  <span>All Users</span>
+                </NavLink>
+              </li>
+            </>
+          ) : (
+            <>
+              <li>
+                <NavLink
+                  to="/dashboard/userhome"
+                  className={({ isActive }) =>
+                    isActive
+                      ? "text-red-500 font-semibold flex items-center space-x-2"
+                      : "hover:text-blue-400 flex items-center space-x-2"
+                  }
+                >
+                  <FaHome size={20} />
+                  <span>User Home</span>
+                </NavLink>
+              </li>
+              <li>
+                <NavLink
+                  to="/dashboard/reservation"
+                  className={({ isActive }) =>
+                    isActive
+                      ? "text-red-500 font-semibold flex items-center space-x-2"
+                      : "hover:text-blue-400 flex items-center space-x-2"
+                  }
+                >
+                  <FaRegCalendarCheck size={20} />
+                  <span>Reservation</span>
+                </NavLink>
+              </li>
+              <li>
+                <NavLink
+                  to="/dashboard/carts"
+                  className={({ isActive }) =>
+                    isActive
+                      ? "text-red-500 font-semibold flex items-center space-x-2"
+                      : "hover:text-blue-400 flex items-center space-x-2"
+                  }
+                >
+                  <FaShoppingBag size={20} />
+                  <span>My Carts</span>
+                </NavLink>
+              </li>
+              <li>
+                <NavLink
+                  to="/dashboard/addreview"
+                  className={({ isActive }) =>
+                    isActive
+                      ? "text-red-500 font-semibold flex items-center space-x-2"
+                      : "hover:text-blue-400 flex items-center space-x-2"
+                  }
+                >
+                  <FaCommentDots size={20} />
+                  <span>Add Review</span>
+                </NavLink>
+              </li>
+              <li>
+                <NavLink
+                  to="/dashboard/orders"
+                  className={({ isActive }) =>
+                    isActive
+                      ? "text-red-500 font-semibold flex items-center space-x-2"
+                      : "hover:text-blue-400 flex items-center space-x-2"
+                  }
+                >
+                  <FaClipboardCheck size={20} />
+                  <span>Orders</span>
+                </NavLink>
+              </li>
+              <li>
+                <NavLink
+                  to="/dashboard/booking"
+                  className={({ isActive }) =>
+                    isActive
+                      ? "text-red-500 font-semibold flex items-center space-x-2"
+                      : "hover:text-blue-400 flex items-center space-x-2"
+                  }
+                >
+                  <FaBookmark size={20} />
+                  <span>My Booking</span>
+                </NavLink>
+              </li>
+            </>
+          )}
           <div className="divider divider-accent"></div>
           {/* shared navlinks */}
           <li>
@@ -109,7 +183,7 @@ const Dashboard = () => {
                   : "hover:text-blue-400 flex items-center space-x-2"
               }
             >
-              <FaHome size={20} /> {/* Orders Icon */}
+              <FaHome size={20} />
               <span>Home</span>
             </NavLink>
           </li>
@@ -122,7 +196,7 @@ const Dashboard = () => {
                   : "hover:text-blue-400 flex items-center space-x-2"
               }
             >
-              <FaPlus size={20} /> {/* Orders Icon */}
+              <FaUtensils size={20} />
               <span>Menu</span>
             </NavLink>
           </li>
@@ -135,7 +209,7 @@ const Dashboard = () => {
                   : "hover:text-blue-400 flex items-center space-x-2"
               }
             >
-              <FaEnvelope size={20} /> {/* Orders Icon */}
+              <FaEnvelope size={20} />
               <span>Contact</span>
             </NavLink>
           </li>

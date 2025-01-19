@@ -10,6 +10,7 @@ import Dashboard from "../layout/Dashboard";
 import Carts from "../pages/Dashboard/Carts";
 import OrderPage from "../pages/Dashboard/OrderPage";
 import PrivateRoutes from "./PrivateRoutes";
+import AllUsers from "../pages/Dashboard/AllUsers";
 
 export const router = createBrowserRouter([
   {
@@ -53,6 +54,10 @@ export const router = createBrowserRouter([
       {
         path: "order",
         element: <OrderPage />,
+      },
+      {
+        path: "users",
+        element: <AllUsers />,
       },
     ],
   },
