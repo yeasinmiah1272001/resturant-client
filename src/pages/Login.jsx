@@ -1,8 +1,9 @@
 import { useContext } from "react";
-import { FaFacebookF, FaGoogle, FaApple, FaCoffee } from "react-icons/fa";
+import { FaFacebookF } from "react-icons/fa";
 import { AuthContext } from "../provider/AuthProvider";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
+import SocialLogin from "../components/SocialLogin";
 
 const Login = () => {
   const { loginUser } = useContext(AuthContext);
@@ -75,17 +76,9 @@ const Login = () => {
         <div className="mt-6">
           <p className="text-center text-gray-500 mb-4">Or login with</p>
           <div className="flex justify-center space-x-4">
+            <SocialLogin />
             <button className="bg-blue-600 text-white p-3 rounded-full hover:bg-blue-700 transition duration-300">
               <FaFacebookF />
-            </button>
-            <button className="bg-red-500 text-white p-3 rounded-full hover:bg-red-600 transition duration-300">
-              <FaGoogle />
-            </button>
-            <button className="bg-gray-800 text-white p-3 rounded-full hover:bg-gray-900 transition duration-300">
-              <FaApple />
-            </button>
-            <button className="bg-yellow-500 text-white p-3 rounded-full hover:bg-yellow-600 transition duration-300">
-              <FaCoffee />
             </button>
           </div>
         </div>

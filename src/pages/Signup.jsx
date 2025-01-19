@@ -1,10 +1,15 @@
 import { useContext } from "react";
-import { FaFacebookF, FaGoogle, FaApple, FaCoffee } from "react-icons/fa";
-import { Link } from "react-router-dom";
+import { FaFacebookF } from "react-icons/fa";
+import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../provider/AuthProvider";
+import Swal from "sweetalert2";
+import useAxiosPublic from "../hooks/useAxiosPublic";
+import SocialLogin from "../components/SocialLogin";
 
 const Signup = () => {
   const { createUser } = useContext(AuthContext);
+  const axiosPublic = useAxiosPublic();
+  const navigate = useNavigate();
   const handleLogin = (e) => {
     e.preventDefault();
     const form = e.target;
@@ -12,7 +17,21 @@ const Signup = () => {
     const password = form.password.value;
     createUser(email, password).then((result) => {
       const user = result.user;
-      console.log("user", user);
+      const userInfo = {
+        email: user.email,
+      };
+      axiosPublic.post("/users", userInfo).then((res) => {
+        if (res.data.insertedId) {
+          Swal.fire({
+            position: "top-end",
+            icon: "success",
+            title: `user register succcess`,
+            showConfirmButton: false,
+            timer: 1500,
+          });
+        }
+        navigate("/");
+      });
     });
   };
   return (
@@ -63,17 +82,9 @@ const Signup = () => {
         <div className="mt-6">
           <p className="text-center text-gray-500 mb-4">Or login with</p>
           <div className="flex justify-center space-x-4">
+            <SocialLogin />
             <button className="bg-blue-600 text-white p-3 rounded-full hover:bg-blue-700 transition duration-300">
               <FaFacebookF />
-            </button>
-            <button className="bg-red-500 text-white p-3 rounded-full hover:bg-red-600 transition duration-300">
-              <FaGoogle />
-            </button>
-            <button className="bg-gray-800 text-white p-3 rounded-full hover:bg-gray-900 transition duration-300">
-              <FaApple />
-            </button>
-            <button className="bg-yellow-500 text-white p-3 rounded-full hover:bg-yellow-600 transition duration-300">
-              <FaCoffee />
             </button>
           </div>
         </div>
