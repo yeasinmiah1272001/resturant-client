@@ -42,20 +42,16 @@ const AllUsers = () => {
   };
 
   const handleMakeadmin = (user) => {
-    Swal.fire({
-      title: "Are you sure?",
-      text: "You won't be able to revert this!",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
-      confirmButtonText: "Yes, delete it!",
-    }).then((result) => {
-      if (result.isConfirmed) {
+    axiosSecure.patch(`/users/admin/${user._id}`).then((res) => {
+      console.log(res.data);
+      if (res.data.modifiedCount > 0) {
+        refetch();
         Swal.fire({
-          title: "Deleted!",
-          text: "Your file has been deleted.",
+          position: "top-end",
           icon: "success",
+          title: `${user.email} is admin`,
+          showConfirmButton: false,
+          timer: 1500,
         });
       }
     });
@@ -89,11 +85,15 @@ const AllUsers = () => {
                   {user.email}
                 </td>
                 <td className="border border-gray-300 px-4 py-2">
-                  <FaUserShield
-                    onClick={handleMakeadmin}
-                    size={30}
-                    className="text-green-500 inline"
-                  />
+                  {user.role === "admin" ? (
+                    "Admin"
+                  ) : (
+                    <FaUserShield
+                      onClick={() => handleMakeadmin(user)}
+                      size={30}
+                      className="text-green-500 inline"
+                    />
+                  )}
                 </td>
                 <td className="border border-gray-300 px-4 py-2 flex justify-center gap-4">
                   <button
