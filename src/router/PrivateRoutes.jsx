@@ -1,12 +1,17 @@
 import React, { useContext } from "react";
 import { AuthContext } from "../provider/AuthProvider";
 import { Navigate, useLocation } from "react-router-dom";
+import { FaSpinner } from "react-icons/fa";
 
 const PrivateRoutes = ({ children }) => {
   const { user, loading } = useContext(AuthContext);
   const location = useLocation();
   if (loading) {
-    return <span className="loading loading-ball loading-lg"></span>;
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <FaSpinner className="text-blue-500 text-6xl animate-spin" />
+      </div>
+    );
   }
   if (user) {
     return children;

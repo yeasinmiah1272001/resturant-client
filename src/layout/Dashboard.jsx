@@ -1,30 +1,18 @@
 import React from "react";
 import { NavLink, Outlet } from "react-router-dom";
 import {
-  FaUserTie,
   FaUserShield,
   FaPlusSquare,
-  FaClipboardList,
   FaTasks,
-  FaBoxes,
   FaUsers,
-  FaUserFriends,
   FaHome,
   FaUtensils,
-  FaBookOpen,
   FaEnvelope,
-  FaPhone,
-  FaComments,
-  FaCalendarAlt,
   FaRegCalendarCheck,
   FaShoppingBag,
-  FaCartPlus,
-  FaStar,
   FaCommentDots,
   FaClipboardCheck,
-  FaTruck,
   FaBookmark,
-  FaCalendarCheck,
 } from "react-icons/fa";
 
 const Dashboard = () => {
