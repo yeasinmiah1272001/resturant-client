@@ -14,9 +14,10 @@ import {
   FaClipboardCheck,
   FaBookmark,
 } from "react-icons/fa";
+import useAdmin from "../hooks/useAdmin";
 
 const Dashboard = () => {
-  const isAdmin = true;
+  const [isAdmin] = useAdmin();
   return (
     <div className="flex h-screen">
       {/* Left side navigation */}

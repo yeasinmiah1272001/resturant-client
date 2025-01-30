@@ -55,7 +55,7 @@ const AuthProvider = ({ children }) => {
       console.log("currentUser", currentUser);
     });
     return () => unsubscribe();
-  }, []);
+  }, [axiosPublic]);
 
   const authInfo = {
     user,
