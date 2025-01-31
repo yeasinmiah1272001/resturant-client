@@ -18,6 +18,7 @@ import useAdmin from "../hooks/useAdmin";
 
 const Dashboard = () => {
   const [isAdmin] = useAdmin();
+  // console.log("isadmin", isAdmin);
   return (
     <div className="flex h-screen">
       {/* Left side navigation */}
