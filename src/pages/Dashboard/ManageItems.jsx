@@ -4,11 +4,13 @@ import useMenu from "../../hooks/useMenu";
 import { FaEdit, FaTrashAlt } from "react-icons/fa";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 import Swal from "sweetalert2";
+import { Link } from "react-router-dom";
 
 const ManageItems = () => {
-  const [menu] = useMenu();
+  const [menu, loading, refetch] = useMenu();
   const axiosSecure = useAxiosSecure();
-  const handleDeleteItem = (item) => {
+
+  const handleDelete = (id) => {
     Swal.fire({
       title: "Are you sure?",
       text: "You won't be able to revert this!",
@@ -17,29 +19,28 @@ const ManageItems = () => {
       confirmButtonColor: "#3085d6",
       cancelButtonColor: "#d33",
       confirmButtonText: "Yes, delete it!",
-    }).then(async (result) => {
+    }).then((result) => {
       if (result.isConfirmed) {
-        const res = await axiosSecure.delete(`/menu/${item._id}`);
-        console.log(res.data);
-        // if (res.data.deletedCount > 0) {
-        //   // refetch to update the ui
-        //   //   refetch();
-        //   Swal.fire({
-        //     position: "top-end",
-        //     icon: "success",
-        //     title: `${item.name} has been deleted`,
-        //     showConfirmButton: false,
-        //     timer: 1500,
-        //   });
-        // }
+        axiosSecure.delete(`/menu/${id}`).then((res) => {
+          console.log(res.data);
+          if (res.data.deletedCount > 0) {
+            Swal.fire({
+              title: "Deleted!",
+              text: "users has been deleted.",
+              icon: "success",
+            });
+            refetch();
+          }
+        });
       }
     });
   };
+
   return (
     <div className="p-6">
       <SectionTitle heading={"Manage Items"} subHeading={"-- Hurry up --"} />
       <h1 className="text-red-500 font-semibold text-2xl">
-        TotalItems : {menu.length}
+        Total Items: {menu.length}
       </h1>
       <div className="overflow-x-auto mt-6">
         <table className="min-w-full bg-white border border-gray-300">
@@ -65,7 +66,7 @@ const ManageItems = () => {
           <tbody>
             {menu.map((item, index) => (
               <tr
-                key={item.id}
+                key={item._id}
                 className="border-b border-gray-200 hover:bg-gray-50"
               >
                 <td className="py-3 px-6">{index + 1}</td>
@@ -82,14 +83,17 @@ const ManageItems = () => {
                 <td className="py-3 px-6 text-gray-700">${item.price}</td>
                 <td className="py-3 px-6">
                   <div className="flex gap-4 items-center">
-                    <button className="text-blue-600 hover:text-blue-800">
+                    <Link
+                      to={`/dashboard/update/${item._id}`}
+                      className="text-blue-600 hover:text-blue-800"
+                    >
                       <FaEdit className="text-xl" />
-                    </button>
-                    <button className="text-red-600 hover:text-red-800">
-                      <FaTrashAlt
-                        onClick={() => handleDeleteItem(item)}
-                        className="text-xl"
-                      />
+                    </Link>
+                    <button
+                      className="text-red-600 hover:text-red-800"
+                      onClick={() => handleDelete(item._id)}
+                    >
+                      <FaTrashAlt className="text-xl" />
                     </button>
                   </div>
                 </td>
