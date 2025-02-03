@@ -1,11 +1,36 @@
 import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { FiCreditCard } from "react-icons/fi";
+import useAxiosSecure from "../../hooks/useAxiosSecure";
+import useCarts from "../../hooks/useCarts";
+import { AuthContext } from "../../provider/AuthProvider";
+import Swal from "sweetalert2";
+import { useNavigate } from "react-router-dom";
 
 const CheckoutForm = () => {
   const stripe = useStripe();
+  const { user } = useContext(AuthContext);
   const elements = useElements();
   const [error, setError] = useState("");
+  const [clientSecret, setClientSecret] = useState("");
+  const [transitionId, setTransition] = useState("");
+  const navigate = useNavigate();
+  const axiosSecure = useAxiosSecure();
+  const [carts, refetch] = useCarts();
+  const totalPrice = carts.reduce((acc, item) => acc + item.price, 0);
+
+  useEffect(() => {
+    if (totalPrice > 0) {
+      axiosSecure
+        .post("/create-checkout-session", {
+          price: totalPrice,
+        })
+        .then((res) => {
+          console.log("taka", res.data.clientSecret);
+          setClientSecret(res.data.clientSecret);
+        });
+    }
+  }, [axiosSecure, totalPrice]);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -31,6 +56,50 @@ const CheckoutForm = () => {
     } else {
       console.log("[PaymentMethod]", paymentMethod);
       setError("");
+    }
+
+    const { paymentIntent, error: confirmError } =
+      await stripe.confirmCardPayment(clientSecret, {
+        payment_method: {
+          card: card,
+          billing_details: {
+            email: user?.email,
+          },
+        },
+      });
+    if (confirmError) {
+      console.log("confirmError");
+    } else {
+      console.log("paymentIntent", paymentIntent);
+      if (paymentIntent.status === "succeeded") {
+        console.log("trasaction id", paymentIntent.id);
+        setTransition(paymentIntent.id);
+
+        // saved the database
+
+        const payment = {
+          price: totalPrice,
+          paymentIntentId: paymentIntent.id,
+          email: user.email,
+          data: new Date(),
+          cartIds: carts.map((item) => item._id),
+          menuItemIds: carts.map((item) => item.menuItem),
+          status: "pending",
+        };
+        const res = await axiosSecure.post("/payment", payment);
+        console.log("ressss", res.data);
+        if (res.data?.paymentResult?.insertedId) {
+          Swal.fire({
+            position: "top-end",
+            icon: "success",
+            title: "Your payment success",
+            showConfirmButton: false,
+            timer: 1500,
+          });
+        }
+        refetch();
+        navigate("/dashboard/paymenthistory");
+      }
     }
   };
 
@@ -64,12 +133,13 @@ const CheckoutForm = () => {
 
         <button
           type="submit"
-          disabled={!stripe}
+          disabled={!stripe || !clientSecret}
           className="w-full bg-indigo-500 text-white font-semibold py-2 rounded-2xl hover:bg-indigo-600 transition-all"
         >
           Pay
         </button>
         <p className="text-red-500">{error}</p>
+        {transitionId && <p className="text-green-500">{transitionId}</p>}
       </form>
     </div>
   );

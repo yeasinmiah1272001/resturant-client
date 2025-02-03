@@ -15,8 +15,10 @@ import {
   FaBookmark,
 } from "react-icons/fa";
 import useAdmin from "../hooks/useAdmin";
+import useCarts from "../hooks/useCarts";
 
 const Dashboard = () => {
+  const [carts] = useCarts();
   const [isAdmin] = useAdmin();
   // console.log("isadmin", isAdmin);
   return (
@@ -118,12 +120,12 @@ const Dashboard = () => {
                   }
                 >
                   <FaShoppingBag size={20} />
-                  <span>My Carts</span>
+                  <span>My Carts {carts.length}</span>
                 </NavLink>
               </li>
               <li>
                 <NavLink
-                  to="/dashboard/addreview"
+                  to="/dashboard/paymenthistory"
                   className={({ isActive }) =>
                     isActive
                       ? "text-red-500 font-semibold flex items-center space-x-2"
@@ -131,7 +133,7 @@ const Dashboard = () => {
                   }
                 >
                   <FaCommentDots size={20} />
-                  <span>Add Review</span>
+                  <span>Payment History</span>
                 </NavLink>
               </li>
               <li>
