@@ -5,9 +5,11 @@ import { FaShoppingCart } from "react-icons/fa";
 import { useContext } from "react";
 import { AuthContext } from "../provider/AuthProvider";
 import useCarts from "../hooks/useCarts";
+import useAdmin from "../hooks/useAdmin";
 
 const Navbar = () => {
   const { user, logOut } = useContext(AuthContext);
+  const [isAdmin] = useAdmin();
   const [carts] = useCarts();
   const handleLogout = () => {
     logOut();
@@ -46,9 +48,16 @@ const Navbar = () => {
           </div>
         </NavLink>
       </li>
-      <li>
-        <NavLink to="/b">DashBoard</NavLink>
-      </li>
+      {user && isAdmin && (
+        <li>
+          <NavLink to="/dashboard/adminhome">DashBoard</NavLink>
+        </li>
+      )}
+      {user && !isAdmin && (
+        <li>
+          <NavLink to="/dashboard/userhome">DashBoard</NavLink>
+        </li>
+      )}
     </>
   );
 

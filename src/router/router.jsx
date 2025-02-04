@@ -17,6 +17,8 @@ import ManageItems from "../pages/Dashboard/ManageItems";
 import UpdateItem from "../pages/Dashboard/UpdateItem";
 import Payment from "../pages/Dashboard/Payment";
 import PaymentHistory from "../pages/Dashboard/PaymentHistory";
+import AdminHome from "../pages/Dashboard/AdminHome";
+import UserHome from "../pages/Dashboard/UserHome";
 
 export const router = createBrowserRouter([
   {
@@ -69,6 +71,10 @@ export const router = createBrowserRouter([
         path: "paymenthistory",
         element: <PaymentHistory />,
       },
+      {
+        path: "userhome",
+        element: <UserHome />,
+      },
       // admin related
       {
         path: "users",
@@ -94,7 +100,11 @@ export const router = createBrowserRouter([
         path: "update/:id",
         element: <UpdateItem />,
         loader: ({ params }) =>
-          fetch(`http://localhost:8000/menu/${params.id}`),
+          fetch(`https://boss-running.vercel.app/menu/${params.id}`),
+      },
+      {
+        path: "adminhome",
+        element: <AdminHome />,
       },
     ],
   },
